@@ -15,11 +15,27 @@ fsmap :: a -> [a -> a] -> a
 fsmap x [] = x
 fsmap x (f:fs) = fsmap (f x) fs
 
--- data Racional = (Integer "/" Integer) deriving (Show) deriving (Eq)
+data Racional = Racional Integer Integer
 
--- racional :: Integer -> Integer -> Racional
--- racional num den = show num ++ "/" ++ show den 
+racional :: Integer -> Integer -> Racional
+racional num den = Racional (div num mcd) (div den mcd)
+    where
+        mcd = gcd num den
 
+numerador :: Racional -> Integer
+numerador (Racional num den) = div num mcd
+    where
+        mcd = gcd num den
 
--- numerador :: Racional -> Integer
--- denominador :: Racional -> Integer
+denominador :: Racional -> Integer
+denominador (Racional num den) = div den mcd
+    where
+        mcd = gcd num den
+
+instance Show Racional
+    where
+        show (Racional num dev) = show num ++ "/" ++ show dev
+
+instance Eq Racional
+    where
+        (Racional num1 dev1) == (Racional num2 dev2) = (num1 == num2) && (dev1 == dev2)
