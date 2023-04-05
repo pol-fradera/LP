@@ -11,9 +11,29 @@ eval1' (x:l) pila = eval1' l (z:pila)
         where 
             z = read (x):: Int
          
+
+eval2 :: String -> Int
+eval2 str                               = head $ foldl res [] $ words str
+    where
+        res :: [Int] -> String -> [Int]
+        res (x1:x2:next) "+"            = (x2+x1):next
+        res (x1:x2:next) "-"            = (x2-x1):next
+        res (x1:x2:next) "*"            = (x2*x1):next
+        res (x1:x2:next) "/"            = (div x2 x1):next
+        res next x                      = (read x):next
+
+
 fsmap :: a -> [a -> a] -> a
 fsmap x [] = x
 fsmap x (f:fs) = fsmap (f x) fs
+
+
+-- divideNconquer :: (a -> Maybe b) -> (a -> (a, a)) -> (a -> (a, a) -> (b, b) -> b) -> a -> b
+-- divideNconquer base divide conquer x
+
+-- base :: (a -> Maybe b) 
+-- base
+
 
 data Racional = Racional Integer Integer
 
