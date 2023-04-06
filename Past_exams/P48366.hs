@@ -13,7 +13,7 @@ eval1' (x:l) pila = eval1' l (z:pila)
          
 
 eval2 :: String -> Int
-eval2 str                               = head $ foldl res [] $ words str
+eval2 str                               = head (foldl res [] (words str))
     where
         res :: [Int] -> String -> [Int]
         res (x1:x2:next) "+"            = (x2+x1):next
